@@ -23,6 +23,7 @@ end
 
 post '/' do
   raise unless params['token'] == ENV['SLACK_AUTH_TOKEN']
+  content_type :json
   {
     response_type: 'in_channel',
     text: RequestHandler.new(params).get_emojis
