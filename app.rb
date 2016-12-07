@@ -1,4 +1,5 @@
 require 'sinatra'
+require 'json'
 require 'fuzzy_match'
 
 class RequestHandler
@@ -22,7 +23,10 @@ end
 
 post '/' do
   raise unless params['token'] == ENV['SLACK_AUTH_TOKEN']
-  RequestHandler.new(params).get_emojis
+  {
+    response_type: 'in_channel',
+    text: RequestHandler.new(params).get_emojis
+  }.to_json
 end
 
 EMOJIS = %w(
